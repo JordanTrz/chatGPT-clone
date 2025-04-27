@@ -1,11 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import "./rootLayout.css";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
+import { SignedIn, UserButton } from "@clerk/clerk-react";
 
 const RootLayout = () => {
   return (
