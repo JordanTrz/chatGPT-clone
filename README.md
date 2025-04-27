@@ -4,8 +4,7 @@ A fullstack chatGPT clone using:
 
 ```
  - React
- - Tailwind
- - Express
+ - Nodejs & Express
  - Mongo DB
  - Google Gemini
 ```
