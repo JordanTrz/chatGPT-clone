@@ -21,8 +21,6 @@ async function model(contents) {
       safetySettings,
     },
   });
-
-  console.log(response.text);
   return response.text;
 }
 
