@@ -21,6 +21,10 @@ async function model(contents) {
       safetySettings,
     },
   });
+  if (response.error) {
+    console.error('Error:', response.error);
+    return null;
+  }
   return response.text;
 }
 
