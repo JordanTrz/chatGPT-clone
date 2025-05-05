@@ -26,11 +26,10 @@ const NewPrompt = () => {
   const handleModelResponse = async (text) => {
     setQuestion(text);
     const question = Object.entries(img.aiData).length
-      ? [img.aiData, { text }]
-      : text;
-    console.log(question);
-    const response = await model(question);
-    setAnswer(response);
+      ? { message: [{ text }, img.aiData] }
+      : { message: text };
+    await model(question, setAnswer);
+    setImg({ isLoading: false, error: '', dbData: {}, aiData: {} });
   };
 
   useEffect(() => {

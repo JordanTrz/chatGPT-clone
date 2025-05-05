@@ -13,19 +13,39 @@ const safetySettings = [
   },
 ];
 
-async function model(contents) {
-  const response = await ai.models.generateContent({
+async function model(contents, setAnswer) {
+  // const response = await ai.models.generateContent({
+  //   model: 'gemini-2.0-flash',
+  //   contents,
+  //   config: {
+  //     safetySettings,
+  //   },
+  // });
+  const chat = ai.chats.create({
     model: 'gemini-2.0-flash',
-    contents,
+    history: [
+      {
+        role: 'user',
+        parts: [{ text: 'Hello' }],
+      },
+      {
+        role: 'model',
+        parts: [{ text: 'Great to meet you. What would you like to know?' }],
+      },
+    ],
     config: {
       safetySettings,
     },
   });
-  if (response.error) {
-    console.error('Error:', response.error);
-    return null;
+
+  const stream = await chat.sendMessageStream(contents);
+  let response = '';
+
+  for await (const chunk of stream) {
+    response += chunk.text;
+    console.log(response);
+    setAnswer(response);
   }
-  return response.text;
 }
 
 export default model;
