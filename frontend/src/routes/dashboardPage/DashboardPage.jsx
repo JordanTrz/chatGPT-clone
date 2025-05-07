@@ -9,10 +9,11 @@ const DashboardPage = () => {
     if (!question) return;
     await fetch('http://localhost:3000/api/chats', {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ question, userId }),
+      body: JSON.stringify({ question }),
     });
   };
 
