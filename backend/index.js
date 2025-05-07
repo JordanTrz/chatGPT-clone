@@ -85,7 +85,7 @@ app.get('/api/userchats', requireAuth(), async (req, res) => {
   const userId = req.auth.userId;
 
   try {
-    const userChat = UserChats.findOne({ userId });
+    const userChat = await UserChats.findOne({ userId });
     res.status(200).send(userChat.chats);
   } catch (error) {
     console.error(error);
