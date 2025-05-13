@@ -1,20 +1,35 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import './dashboardPage.css';
-import { useAuth } from '@clerk/clerk-react';
+import { useNavigate } from 'react-router-dom';
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const DashboardPage = () => {
-  const { userId } = useAuth();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: (question) => {
+      return fetch(`${API_URL}/chats`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ question }),
+      }).then((res) => res.json());
+    },
+    onSuccess: (id) => {
+      queryClient.invalidateQueries({ queryKey: ['userchats'] });
+      navigate(`/dashboard/chats/${id}`);
+    },
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const question = e.target.question.value;
     if (!question) return;
-    await fetch('http://localhost:3000/api/chats', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ question }),
-    });
+    await mutation.mutate(question);
   };
 
   return (

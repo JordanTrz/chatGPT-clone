@@ -93,6 +93,20 @@ app.get('/api/userchats', requireAuth(), async (req, res) => {
   }
 });
 
+app.get('/api/chats/:id', requireAuth(), async (req, res) => {
+  const chatId = req.params.id;
+  const userId = req.auth.userId;
+
+  try {
+    const chat = await Chat.findOne({ _id: chatId, userId });
+    if (!chat) return res.status(404).send('Chat not found');
+    return res.status(200).send(chat);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching chat');
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(401).send('Unauthenticated');
