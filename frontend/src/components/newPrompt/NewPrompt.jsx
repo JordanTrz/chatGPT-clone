@@ -11,6 +11,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 const NewPrompt = ({ data }) => {
   const endRef = useRef(null);
   const formRef = useRef(null);
+  const hasRun = useRef(false);
   const queryClient = useQueryClient();
 
   const [question, setQuestion] = useState('');
@@ -59,8 +60,8 @@ const NewPrompt = ({ data }) => {
     await handleModelResponse(question);
   };
 
-  const handleModelResponse = async (text) => {
-    setQuestion(text);
+  const handleModelResponse = async (text, isInitial = false) => {
+    if (!isInitial) setQuestion(text);
 
     try {
       const question = Object.entries(img.aiData).length
@@ -82,6 +83,13 @@ const NewPrompt = ({ data }) => {
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [data, answer, question, img.dbData]);
+
+  useEffect(() => {
+    if (!hasRun.current && data?.history?.length === 1) {
+      handleModelResponse(data.history[0].parts[0].text, true);
+    }
+    hasRun.current = true;
+  }, []);
 
   return (
     <>
