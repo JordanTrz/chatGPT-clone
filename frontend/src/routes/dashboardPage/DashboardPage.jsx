@@ -9,7 +9,7 @@ const DashboardPage = () => {
   const navigate = useNavigate();
 
   const mutation = useMutation({
-    mutationFn: (question) => {
+    mutationFn: async (question) => {
       return fetch(`${API_URL}/chats`, {
         method: 'POST',
         credentials: 'include',

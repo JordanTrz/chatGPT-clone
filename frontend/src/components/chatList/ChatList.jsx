@@ -16,7 +16,7 @@ const ChatList = () => {
   return (
     <div className="chatList">
       <span className="title">Dashboard</span>
-      <Link to="/dashboard">Chat AI</Link>
+      <Link to="/dashboard">New chat</Link>
       <Link to="/">Explore Chat AI</Link>
       {/* <Link to="/">Contact</Link> */}
       <hr />

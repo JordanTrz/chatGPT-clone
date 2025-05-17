@@ -19,8 +19,6 @@ const ChatPage = () => {
       }).then((res) => res.json()),
   });
 
-  console.log(data);
-
   return (
     <div className="chatPage">
       <div className="wrapper">
@@ -40,6 +38,7 @@ const ChatPage = () => {
                       transformation={[{ height: 300, width: 300 }]}
                       loading="lazy"
                       lqip={{ active: true, quality: 20 }}
+                      className="img"
                     />
                   )}
                   <div
@@ -52,7 +51,7 @@ const ChatPage = () => {
                   </div>
                 </>
               ))}
-          <NewPrompt />
+          <NewPrompt data={data} />
         </div>
       </div>
     </div>

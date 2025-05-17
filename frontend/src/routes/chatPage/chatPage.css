@@ -25,6 +25,10 @@
         margin: 10px 0;
       }
 
+      .img {
+        align-self: flex-end;
+      }
+
       .message {
         padding: 20px;
 

@@ -13,7 +13,7 @@ const safetySettings = [
   },
 ];
 
-async function model(contents, setAnswer) {
+async function model(contents) {
   const chat = ai.chats.create({
     model: 'gemini-2.0-flash',
     history: [
@@ -31,13 +31,7 @@ async function model(contents, setAnswer) {
     },
   });
 
-  const stream = await chat.sendMessageStream(contents);
-  let response = '';
-
-  for await (const chunk of stream) {
-    response += chunk.text;
-    setAnswer(response);
-  }
+  return chat.sendMessageStream(contents);
 }
 
 export default model;
