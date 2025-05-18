@@ -67,7 +67,13 @@ const NewPrompt = ({ data }) => {
       const question = Object.entries(img.aiData).length
         ? { message: [{ text }, img.aiData] }
         : { message: text };
-      const result = await model(question);
+      const history = [
+        data?.history.map(({ role, parts }) => ({
+          role,
+          parts: [{ text: parts[0].text }],
+        })),
+      ];
+      const result = await model(question, history);
       let response = '';
 
       for await (const chunk of result) {
